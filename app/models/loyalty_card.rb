@@ -26,12 +26,4 @@ class LoyaltyCard < ApplicationRecord
       customer.loyalty_cards.create!(status: :active) # old card flipped to completed first, so partial index stays satisfied
     end
   end
-
-  def self.ransackable_attributes(_auth_object = nil)
-    %w[status stamps_count completed_at created_at updated_at id customer_id]
-  end
-
-  def self.ransackable_associations(_auth_object = nil)
-    %w[customer stamps]
-  end
 end
