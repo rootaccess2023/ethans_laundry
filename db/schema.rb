@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_09_10_103950) do
+ActiveRecord::Schema[7.1].define(version: 2026_09_10_104051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,4 +40,37 @@ ActiveRecord::Schema[7.1].define(version: 2026_09_10_103950) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "customers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "public_token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["public_token"], name: "index_customers_on_public_token", unique: true
+  end
+
+  create_table "loyalty_cards", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.integer "status", default: 0, null: false
+    t.integer "stamps_count", default: 0, null: false
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id", "status"], name: "index_loyalty_cards_on_customer_id_and_status"
+    t.index ["customer_id"], name: "idx_one_active_card_per_customer", unique: true, where: "(status = 0)"
+    t.index ["customer_id"], name: "index_loyalty_cards_on_customer_id"
+  end
+
+  create_table "stamps", force: :cascade do |t|
+    t.bigint "loyalty_card_id", null: false
+    t.bigint "admin_user_id"
+    t.datetime "stamped_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_user_id"], name: "index_stamps_on_admin_user_id"
+    t.index ["loyalty_card_id"], name: "index_stamps_on_loyalty_card_id"
+  end
+
+  add_foreign_key "loyalty_cards", "customers"
+  add_foreign_key "stamps", "admin_users"
+  add_foreign_key "stamps", "loyalty_cards"
 end

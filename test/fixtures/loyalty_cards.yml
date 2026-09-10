@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer: one
+  status: 1
+  stamps_count: 1
+  completed_at: 2026-09-10 18:40:38
+
+two:
+  customer: two
+  status: 1
+  stamps_count: 1
+  completed_at: 2026-09-10 18:40:38

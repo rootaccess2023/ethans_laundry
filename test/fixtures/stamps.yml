@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  loyalty_card: one
+  admin_user: one
+  stamped_at: 2026-09-10 18:40:51
+
+two:
+  loyalty_card: two
+  admin_user: two
+  stamped_at: 2026-09-10 18:40:51
