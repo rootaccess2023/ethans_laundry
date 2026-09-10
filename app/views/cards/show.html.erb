@@ -1,0 +1,143 @@
+<style>
+  body {
+    background: #f4f4f6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 24px;
+  }
+
+  .card {
+    max-width: 420px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 3px solid #1a3a8f;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(26, 58, 143, 0.15);
+  }
+
+  .card-header {
+    background: #1a3a8f;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 16px 14px;
+  }
+
+  .card-header h1 {
+    margin: 0 0 4px;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+  }
+
+  .card-header .tagline {
+    margin: 0;
+    font-size: 13px;
+    color: #c0143c;
+    background: #ffffff;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: bold;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .customer-name {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a3a8f;
+    margin-bottom: 18px;
+  }
+
+  .slots {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .slot {
+    aspect-ratio: 1 / 1;
+    border: 2px dashed #1a3a8f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #1a3a8f;
+    font-size: 16px;
+  }
+
+  .slot.stamped {
+    background: #1a3a8f;
+    border-style: solid;
+    color: #ffffff;
+  }
+
+  .free-slot {
+    border: 3px solid #c0143c;
+    border-radius: 12px;
+    text-align: center;
+    padding: 14px;
+    font-weight: bold;
+    color: #c0143c;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+
+  .free-slot.ready {
+    background: #c0143c;
+    color: #ffffff;
+  }
+
+  .status-message {
+    text-align: center;
+    font-size: 15px;
+    color: #1a3a8f;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .card-footer {
+    text-align: center;
+    background: #f4f4f6;
+    color: #1a3a8f;
+    font-size: 13px;
+    padding: 12px;
+    font-weight: bold;
+  }
+</style>
+
+<div class="card">
+  <div class="card-header">
+    <h1>Ethan's Laundry Shop</h1>
+    <p class="tagline">Wash 10 times, your 11th wash is FREE!</p>
+  </div>
+
+  <div class="card-body">
+    <p class="customer-name"><%= @customer.name %></p>
+
+    <div class="slots">
+      <% (0...LoyaltyCard::STAMPS_REQUIRED).each do |i| %>
+        <div class="slot<%= " stamped" if i < @card.stamps_count %>"><%= i + 1 %></div>
+      <% end %>
+    </div>
+
+    <div class="free-slot<%= " ready" if @card.reward_ready? %>">
+      FREE
+    </div>
+
+    <% if @card.reward_ready? %>
+      <p class="status-message">🎁 Your 11th wash is FREE — show this to the staff</p>
+    <% else %>
+      <p class="status-message"><%= LoyaltyCard::STAMPS_REQUIRED - @card.stamps_count %> more to go</p>
+    <% end %>
+  </div>
+
+  <div class="card-footer">
+    Full cards completed: <%= @customer.completed_cards_count %> 🎉
+  </div>
+</div>
