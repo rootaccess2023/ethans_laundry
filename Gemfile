@@ -45,6 +45,7 @@ gem "bootsnap", require: false
 gem "activeadmin", "~> 3.5"
 gem "devise"
 gem "sassc-rails"
+gem "arctic_admin"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"

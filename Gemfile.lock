@@ -95,6 +95,9 @@ GEM
     arbre (1.7.0)
       activesupport (>= 3.0.0)
       ruby2_keywords (>= 0.0.2)
+    arctic_admin (4.4.1)
+      activeadmin (>= 1.1.0, < 4.0)
+      font-awesome-sass (~> 6.0)
     base64 (0.3.0)
     bcrypt (3.1.22)
     benchmark (0.5.0)
@@ -138,6 +141,8 @@ GEM
     ffi (1.17.4-x86_64-darwin)
     ffi (1.17.4-x86_64-linux-gnu)
     ffi (1.17.4-x86_64-linux-musl)
+    font-awesome-sass (6.7.2)
+      sassc (~> 2.0)
     formtastic (5.0.0)
       actionpack (>= 6.0.0)
     formtastic_i18n (0.7.0)
@@ -368,6 +373,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin (~> 3.5)
+  arctic_admin
   bootsnap
   capybara
   debug

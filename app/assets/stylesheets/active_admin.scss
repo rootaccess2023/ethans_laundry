@@ -1,17 +1,12 @@
-// Sass variable overrides must be declared before loading up Active Admin's styles.
+// Sass variable overrides must be declared before loading up Arctic Admin's styles.
 //
-// To view the variables that Active Admin provides, take a look at
-// `app/assets/stylesheets/active_admin/mixins/_variables.scss` in the
-// Active Admin source.
-//
-// For example, to change the sidebar width:
-// $sidebar-width: 242px;
+// To change the primary color of the theme, set $primary-color before the
+// @import below, e.g. $primary-color: #1a3a8f;
 
-// Active Admin's got SASS!
-@import "active_admin/mixins";
-@import "active_admin/base";
+// arctic_admin's own variables/_variables.scss never pulls in
+// _box_shadows.scss, but several of its components/pages reference
+// $box-shadow directly, so it must be imported before arctic_admin/base.
+@import "arctic_admin/variables/box_shadows";
+@import "arctic_admin/base";
 
 // Overriding any non-variable Sass must be done after the fact.
-// For example, to change the default status-tag color:
-//
-//   .status_tag { background: #6090DB; }
