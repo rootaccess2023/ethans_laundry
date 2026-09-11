@@ -1,13 +1,169 @@
-<h1>Ethan's Laundry Shop</h1>
+<style>
+  body {
+    background: #f4f4f6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 24px;
+  }
 
-<p>Wash 10 times, and your 11th wash is FREE!</p>
+  .page {
+    max-width: 560px;
+    margin: 0 auto;
+  }
 
-<p>
-  Every time you drop off a wash with us, we stamp your loyalty card.
-  Fill up 10 stamps and your next wash is on the house.
-</p>
+  .tab-input {
+    display: none;
+  }
 
-<p>
-  Ask our staff for your personal card link so you can check your progress
-  any time.
-</p>
+  .tab-labels {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+
+  .tab-label {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    padding: 12px 16px;
+    border-radius: 10px 10px 0 0;
+    background: #ffffff;
+    color: #1a3a8f;
+    font-weight: bold;
+    border: 2px solid #1a3a8f;
+    border-bottom: none;
+  }
+
+  .tab-panel {
+    display: none;
+    background: #ffffff;
+    border: 2px solid #1a3a8f;
+    border-radius: 0 0 16px 16px;
+    padding: 24px;
+  }
+
+  #tab-home:checked ~ .tab-labels label[for="tab-home"],
+  #tab-loyalty-card:checked ~ .tab-labels label[for="tab-loyalty-card"] {
+    background: #1a3a8f;
+    color: #ffffff;
+  }
+
+  #tab-home:checked ~ .home-panel,
+  #tab-loyalty-card:checked ~ .loyalty-card-panel {
+    display: block;
+  }
+
+  h1 {
+    color: #1a3a8f;
+    margin-top: 0;
+  }
+
+  .tagline {
+    display: inline-block;
+    font-weight: bold;
+    color: #c0143c;
+    background: #f4f4f6;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+
+  .search-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .search-form input[type="text"] {
+    flex: 1;
+    padding: 10px 12px;
+    border: 2px solid #1a3a8f;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+
+  .search-form input[type="submit"] {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #c0143c;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .search-results {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .search-results li {
+    margin-bottom: 8px;
+  }
+
+  .search-results a {
+    display: block;
+    padding: 12px 16px;
+    background: #f4f4f6;
+    border-radius: 8px;
+    color: #1a3a8f;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .search-results a:hover {
+    background: #e6e6ea;
+  }
+
+  .no-results {
+    color: #666;
+  }
+</style>
+
+<div class="page">
+  <input type="radio" name="tab" id="tab-home" class="tab-input" <%= "checked" unless @query.present? %>>
+  <input type="radio" name="tab" id="tab-loyalty-card" class="tab-input" <%= "checked" if @query.present? %>>
+
+  <div class="tab-labels">
+    <label for="tab-home" class="tab-label">Home</label>
+    <label for="tab-loyalty-card" class="tab-label">Loyalty Card</label>
+  </div>
+
+  <div class="tab-panel home-panel">
+    <h1>Ethan's Laundry Shop</h1>
+    <p class="tagline">Wash 10 times, your 11th wash is FREE!</p>
+
+    <p>
+      Every time you drop off a wash with us, we stamp your loyalty card.
+      Fill up 10 stamps and your next wash is on the house.
+    </p>
+
+    <p>
+      Ask our staff for your personal card link, or find it yourself in the
+      Loyalty Card tab above.
+    </p>
+  </div>
+
+  <div class="tab-panel loyalty-card-panel">
+    <h1>Find Your Loyalty Card</h1>
+    <p>Search your name to find your card and check your stamp progress.</p>
+
+    <%= form_with url: root_path, method: :get, local: true, class: "search-form" do %>
+      <%= text_field_tag :name, @query, placeholder: "Enter your name" %>
+      <%= submit_tag "Search" %>
+    <% end %>
+
+    <% if @query.present? %>
+      <% if @results.any? %>
+        <ul class="search-results">
+          <% @results.each do |customer| %>
+            <li><%= link_to customer.name, public_card_path(customer.public_token) %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="no-results">No customer found named "<%= @query %>". Please check with staff.</p>
+      <% end %>
+    <% end %>
+  </div>
+</div>
