@@ -26,7 +26,7 @@ ActiveAdmin.register Customer do
     card = customer.active_card
 
     panel "Loyalty Card" do
-      text_node helpers.controller.view_context.render(partial: "cards/card", locals: { customer: customer, card: card })
+      text_node helpers.controller.view_context.render(partial: "cards/admin_card", locals: { customer: customer, card: card })
     end
 
     panel "Active Card — #{card.stamps_count}/10" do

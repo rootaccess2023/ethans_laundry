@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@theme {
+  --color-navy: #1a3a8f;
+  --color-navy-dark: #142d70;
+  --color-brand-red: #c0143c;
+}
+
+/*
+ * Zero-JS tab toggling for the landing page (radio checkbox-hack).
+ * Tailwind's peer-checked variant only matches direct siblings, but our
+ * nav labels live inside a header bar while the panels sit alongside it —
+ * that sibling-then-descendant relationship needs a plain CSS selector.
+ * Everything else on the page uses Tailwind utility classes.
+ */
+#tab-home:checked ~ .site-header label[for="tab-home"],
+#tab-loyalty-card:checked ~ .site-header label[for="tab-loyalty-card"] {
+  background-color: var(--color-navy);
+  color: #fff;
+}
+
+#tab-home:checked ~ .home-panel,
+#tab-loyalty-card:checked ~ .loyalty-card-panel {
+  display: block;
+}

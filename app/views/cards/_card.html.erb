@@ -1,137 +1,35 @@
-<style>
-  .loyalty-card {
-    max-width: 420px;
-    margin: 0 auto;
-    background: #ffffff;
-    border-radius: 16px;
-    border: 3px solid #1a3a8f;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(26, 58, 143, 0.15);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  }
-
-  .loyalty-card-header {
-    background: #1a3a8f;
-    color: #ffffff;
-    text-align: center;
-    padding: 20px 16px 14px;
-  }
-
-  .loyalty-card-header h1 {
-    margin: 0 0 4px;
-    font-size: 22px;
-    letter-spacing: 0.5px;
-  }
-
-  .loyalty-card-tagline {
-    margin: 0;
-    font-size: 13px;
-    color: #c0143c;
-    background: #ffffff;
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 999px;
-    font-weight: bold;
-  }
-
-  .loyalty-card-body {
-    padding: 20px;
-  }
-
-  .loyalty-card-customer-name {
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    color: #1a3a8f;
-    margin-bottom: 18px;
-  }
-
-  .loyalty-card-slots {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-
-  .loyalty-card-slot {
-    aspect-ratio: 1 / 1;
-    border: 2px dashed #1a3a8f;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: #1a3a8f;
-    font-size: 16px;
-  }
-
-  .loyalty-card-slot.stamped {
-    background: #1a3a8f;
-    border-style: solid;
-    color: #ffffff;
-  }
-
-  .loyalty-card-free-slot {
-    border: 3px solid #c0143c;
-    border-radius: 12px;
-    text-align: center;
-    padding: 14px;
-    font-weight: bold;
-    color: #c0143c;
-    margin-bottom: 16px;
-    letter-spacing: 1px;
-  }
-
-  .loyalty-card-free-slot.ready {
-    background: #c0143c;
-    color: #ffffff;
-  }
-
-  .loyalty-card-status-message {
-    text-align: center;
-    font-size: 15px;
-    color: #1a3a8f;
-    font-weight: bold;
-    margin-bottom: 4px;
-  }
-
-  .loyalty-card-footer {
-    text-align: center;
-    background: #f4f4f6;
-    color: #1a3a8f;
-    font-size: 13px;
-    padding: 12px;
-    font-weight: bold;
-  }
-</style>
-
-<div class="loyalty-card">
-  <div class="loyalty-card-header">
-    <h1>Ethan's Laundry Shop</h1>
-    <p class="loyalty-card-tagline">Wash 10 times, your 11th wash is FREE!</p>
+<div class="mx-auto max-w-[420px] overflow-hidden rounded-2xl border-[3px] border-navy bg-white font-sans shadow-[0_8px_24px_rgba(26,58,143,0.15)]">
+  <div class="bg-navy px-4 pb-3.5 pt-5 text-center text-white">
+    <h1 class="mb-1 text-[22px] font-bold tracking-wide">Ethan's Laundry Shop</h1>
+    <p class="inline-block rounded-full bg-white px-2.5 py-0.5 text-[13px] font-bold text-brand-red">
+      Wash 10 times, your 11th wash is FREE!
+    </p>
   </div>
 
-  <div class="loyalty-card-body">
-    <p class="loyalty-card-customer-name"><%= customer.name %></p>
+  <div class="p-5">
+    <p class="mb-[18px] text-center text-lg font-bold text-navy"><%= customer.name %></p>
 
-    <div class="loyalty-card-slots">
+    <div class="mb-4 grid grid-cols-5 gap-2.5">
       <% (0...LoyaltyCard::STAMPS_REQUIRED).each do |i| %>
-        <div class="loyalty-card-slot<%= " stamped" if i < card.stamps_count %>"><%= i + 1 %></div>
+        <% stamped = i < card.stamps_count %>
+        <div class="flex aspect-square items-center justify-center rounded-full border-2 text-base font-bold <%= stamped ? "border-navy bg-navy text-white" : "border-dashed border-navy text-navy" %>">
+          <%= i + 1 %>
+        </div>
       <% end %>
     </div>
 
-    <div class="loyalty-card-free-slot<%= " ready" if card.reward_ready? %>">
+    <div class="mb-4 rounded-xl border-[3px] border-brand-red px-3.5 py-3.5 text-center font-bold tracking-widest <%= card.reward_ready? ? "bg-brand-red text-white" : "text-brand-red" %>">
       FREE
     </div>
 
     <% if card.reward_ready? %>
-      <p class="loyalty-card-status-message">🎁 Your 11th wash is FREE — show this to the staff</p>
+      <p class="mb-1 text-center text-[15px] font-bold text-navy">🎁 Your 11th wash is FREE — show this to the staff</p>
     <% else %>
-      <p class="loyalty-card-status-message"><%= LoyaltyCard::STAMPS_REQUIRED - card.stamps_count %> more to go</p>
+      <p class="mb-1 text-center text-[15px] font-bold text-navy"><%= LoyaltyCard::STAMPS_REQUIRED - card.stamps_count %> more to go</p>
     <% end %>
   </div>
 
-  <div class="loyalty-card-footer">
+  <div class="bg-gray-100 px-3 py-3 text-center text-[13px] font-bold text-navy">
     Full cards completed: <%= customer.completed_cards_count %> 🎉
   </div>
 </div>
