@@ -50,6 +50,10 @@ gem "arctic_admin"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# Tailwind CSS for the public-facing pages only — ActiveAdmin keeps its
+# own separate Sprockets + Arctic Admin stylesheet, untouched by this.
+gem "tailwindcss-rails"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
