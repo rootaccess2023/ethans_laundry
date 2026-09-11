@@ -1,51 +1,88 @@
 <style>
-  body {
-    background: #f4f4f6;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    margin: 0;
-    padding: 24px;
+  :root {
+    --navy: #1a3a8f;
+    --navy-dark: #142d70;
+    --red: #c0143c;
+    --ink: #1f2430;
+    --muted: #667085;
+    --paper: #ffffff;
+    --bg: #f5f6fa;
+    --border: #e3e6ee;
   }
 
-  .page {
-    max-width: 560px;
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    margin: 0;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .site-header {
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .header-inner {
+    max-width: 960px;
     margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 19px;
+    color: var(--navy);
+  }
+
+  .brand .mark {
+    font-size: 24px;
   }
 
   .tab-input {
     display: none;
   }
 
-  .tab-labels {
+  .nav-labels {
     display: flex;
     gap: 4px;
-    margin-bottom: 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px;
   }
 
-  .tab-label {
-    flex: 1;
-    text-align: center;
+  .nav-label {
     cursor: pointer;
-    padding: 12px 16px;
-    border-radius: 10px 10px 0 0;
-    background: #ffffff;
-    color: #1a3a8f;
-    font-weight: bold;
-    border: 2px solid #1a3a8f;
-    border-bottom: none;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--muted);
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  #tab-home:checked ~ .site-header .nav-labels label[for="tab-home"],
+  #tab-loyalty-card:checked ~ .site-header .nav-labels label[for="tab-loyalty-card"] {
+    background: var(--navy);
+    color: #ffffff;
   }
 
   .tab-panel {
     display: none;
-    background: #ffffff;
-    border: 2px solid #1a3a8f;
-    border-radius: 0 0 16px 16px;
-    padding: 24px;
-  }
-
-  #tab-home:checked ~ .tab-labels label[for="tab-home"],
-  #tab-loyalty-card:checked ~ .tab-labels label[for="tab-loyalty-card"] {
-    background: #1a3a8f;
-    color: #ffffff;
   }
 
   #tab-home:checked ~ .home-panel,
@@ -53,117 +90,339 @@
     display: block;
   }
 
-  h1 {
-    color: #1a3a8f;
-    margin-top: 0;
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
   }
 
-  .tagline {
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color: #ffffff;
+    padding: 72px 24px;
+    text-align: center;
+  }
+
+  .hero-badge {
     display: inline-block;
-    font-weight: bold;
-    color: #c0143c;
-    background: #f4f4f6;
-    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 6px 16px;
     border-radius: 999px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+    line-height: 1.15;
+    margin: 0 0 16px;
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 480px;
+    margin: 0 auto 32px;
+  }
+
+  .btn {
+    display: inline-block;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 32px;
+    border-radius: 10px;
+    border: none;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: #ffffff;
+  }
+
+  /* How it works */
+  .section {
+    padding: 64px 24px;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 28px;
+    margin: 0 0 8px;
+    color: var(--ink);
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: var(--muted);
+    max-width: 460px;
+    margin: 0 auto 40px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .step-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 22px;
+    text-align: center;
+  }
+
+  .step-icon {
+    font-size: 32px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    background: var(--bg);
+    border-radius: 50%;
+  }
+
+  .step-card h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+  }
+
+  .step-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .cta-banner {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    text-align: center;
+    margin: 0 24px 64px;
+    max-width: 912px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-banner h2 {
+    margin: 0 0 8px;
+    font-size: 22px;
+  }
+
+  .cta-banner p {
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+
+  /* Loyalty card search panel */
+  .search-section {
+    padding: 56px 24px;
+  }
+
+  .search-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .search-card h1 {
+    font-size: 24px;
+    margin: 0 0 8px;
+    text-align: center;
+  }
+
+  .search-card > p {
+    color: var(--muted);
+    text-align: center;
+    margin: 0 0 24px;
+    font-size: 15px;
   }
 
   .search-form {
     display: flex;
     gap: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
   }
 
   .search-form input[type="text"] {
     flex: 1;
-    padding: 10px 12px;
-    border: 2px solid #1a3a8f;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
     border-radius: 8px;
     font-size: 15px;
   }
 
+  .search-form input[type="text"]:focus {
+    outline: 2px solid var(--navy);
+    outline-offset: 1px;
+  }
+
   .search-form input[type="submit"] {
-    padding: 10px 18px;
+    padding: 12px 22px;
     border: none;
     border-radius: 8px;
-    background: #c0143c;
+    background: var(--red);
     color: #ffffff;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 15px;
     cursor: pointer;
   }
 
   .search-results {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 20px 0 0;
   }
 
-  .search-results li {
-    margin-bottom: 8px;
+  .search-results li + li {
+    margin-top: 8px;
   }
 
   .search-results a {
-    display: block;
-    padding: 12px 16px;
-    background: #f4f4f6;
-    border-radius: 8px;
-    color: #1a3a8f;
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: var(--bg);
+    border-radius: 10px;
+    color: var(--navy);
+    font-weight: 700;
     text-decoration: none;
   }
 
   .search-results a:hover {
-    background: #e6e6ea;
+    background: var(--border);
+  }
+
+  .search-results a::after {
+    content: "→";
+    font-weight: 700;
   }
 
   .no-results {
-    color: #666;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  @media (max-width: 640px) {
+    .hero h1 {
+      font-size: 30px;
+    }
+
+    .steps {
+      grid-template-columns: 1fr;
+    }
+
+    .header-inner {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-form {
+      flex-direction: column;
+    }
   }
 </style>
 
-<div class="page">
-  <input type="radio" name="tab" id="tab-home" class="tab-input" <%= "checked" unless @query.present? %>>
-  <input type="radio" name="tab" id="tab-loyalty-card" class="tab-input" <%= "checked" if @query.present? %>>
+<input type="radio" name="tab" id="tab-home" class="tab-input" <%= "checked" unless @query.present? %>>
+<input type="radio" name="tab" id="tab-loyalty-card" class="tab-input" <%= "checked" if @query.present? %>>
 
-  <div class="tab-labels">
-    <label for="tab-home" class="tab-label">Home</label>
-    <label for="tab-loyalty-card" class="tab-label">Loyalty Card</label>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand"><span class="mark">🧺</span> Ethan's Laundry Shop</div>
+    <div class="nav-labels">
+      <label for="tab-home" class="nav-label">Home</label>
+      <label for="tab-loyalty-card" class="nav-label">Loyalty Card</label>
+    </div>
   </div>
+</header>
 
-  <div class="tab-panel home-panel">
-    <h1>Ethan's Laundry Shop</h1>
-    <p class="tagline">Wash 10 times, your 11th wash is FREE!</p>
+<div class="tab-panel home-panel">
+  <section class="hero">
+    <span class="hero-badge">Loyalty Program</span>
+    <h1>Wash 10 times.<br>Your 11th wash is FREE.</h1>
+    <p>Every drop-off earns a stamp on your personal loyalty card. Fill it up and your next wash is on us.</p>
+    <label for="tab-loyalty-card" class="btn btn-primary">Find My Loyalty Card</label>
+  </section>
 
-    <p>
-      Every time you drop off a wash with us, we stamp your loyalty card.
-      Fill up 10 stamps and your next wash is on the house.
-    </p>
+  <section class="section">
+    <h2 class="section-title">How it works</h2>
+    <p class="section-subtitle">No app to install, no card to lose — just your name.</p>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-icon">🧺</div>
+        <h3>1. Drop off a wash</h3>
+        <p>Bring your laundry in as usual — nothing changes about how you wash with us.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">✅</div>
+        <h3>2. Get stamped</h3>
+        <p>Our staff add a stamp to your loyalty card every time you check out.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-icon">🎁</div>
+        <h3>3. 11th wash is free</h3>
+        <p>Collect 10 stamps and your next wash costs nothing.</p>
+      </div>
+    </div>
+  </section>
 
-    <p>
-      Ask our staff for your personal card link, or find it yourself in the
-      Loyalty Card tab above.
-    </p>
-  </div>
-
-  <div class="tab-panel loyalty-card-panel">
-    <h1>Find Your Loyalty Card</h1>
-    <p>Search your name to find your card and check your stamp progress.</p>
-
-    <%= form_with url: root_path, method: :get, local: true, class: "search-form" do %>
-      <%= text_field_tag :name, @query, placeholder: "Enter your name" %>
-      <%= submit_tag "Search" %>
-    <% end %>
-
-    <% if @query.present? %>
-      <% if @results.any? %>
-        <ul class="search-results">
-          <% @results.each do |customer| %>
-            <li><%= link_to customer.name, public_card_path(customer.public_token) %></li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p class="no-results">No customer found named "<%= @query %>". Please check with staff.</p>
-      <% end %>
-    <% end %>
+  <div class="cta-banner">
+    <h2>Already a customer?</h2>
+    <p>Search your name to see your card and how close you are to a free wash.</p>
+    <label for="tab-loyalty-card" class="btn btn-primary">Check My Progress</label>
   </div>
 </div>
+
+<div class="tab-panel loyalty-card-panel">
+  <section class="search-section">
+    <div class="search-card">
+      <h1>Find Your Loyalty Card</h1>
+      <p>Search your name to find your card and check your stamp progress.</p>
+
+      <%= form_with url: root_path, method: :get, local: true, class: "search-form" do %>
+        <%= text_field_tag :name, @query, placeholder: "Enter your name" %>
+        <%= submit_tag "Search" %>
+      <% end %>
+
+      <% if @query.present? %>
+        <% if @results.any? %>
+          <ul class="search-results">
+            <% @results.each do |customer| %>
+              <li><%= link_to customer.name, public_card_path(customer.public_token) %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="no-results">No customer found named "<%= @query %>". Please check with staff.</p>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+</div>
+
+<footer class="site-footer">
+  Ethan's Laundry Shop &middot; Ask any staff member for help finding your card.
+</footer>

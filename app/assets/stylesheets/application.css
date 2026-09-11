@@ -10,6 +10,9 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ * NOTE: no `require_tree .` here — this directory also holds active_admin.scss
+ * (ActiveAdmin's own theme, loaded separately by its own layout), and sweeping
+ * it into application.css would leak its rules onto every public page.
+ *
  *= require_self
  */
