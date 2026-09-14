@@ -4,6 +4,8 @@
   --color-navy: #1a3a8f;
   --color-navy-dark: #142d70;
   --color-brand-red: #c0143c;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
 
 /*
