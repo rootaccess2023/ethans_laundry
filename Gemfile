@@ -54,6 +54,9 @@ gem "arctic_admin"
 # own separate Sprockets + Arctic Admin stylesheet, untouched by this.
 gem "tailwindcss-rails"
 
+# Icon helper — renders inline SVGs (Heroicons by default) as `icon(...)`.
+gem "rails_icons"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]

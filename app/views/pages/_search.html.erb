@@ -1,0 +1,54 @@
+<section class="search-page">
+  <h1 class="search-page-title">Search</h1>
+  <p class="search-page-lead">Enter your name to find your loyalty card and check your stamp progress.</p>
+
+  <%= form_with url: root_path, method: :get, local: true, class: "search-page-form" do %>
+    <label class="search-page-field">
+      <span class="search-page-icon" aria-hidden="true">
+        <%= icon "magnifying-glass", variant: :outline, class: "size-[1.15rem] text-gray-500" %>
+      </span>
+      <span class="sr-only">Search by name</span>
+      <%= text_field_tag :name, @query, placeholder: "Search by name", class: "search-page-input" %>
+    </label>
+    <%= submit_tag "Search", class: "search-page-submit" %>
+  <% end %>
+
+  <% if @query.present? %>
+    <% if @results.any? %>
+      <ul class="search-page-results">
+        <% @results.each do |customer| %>
+          <li>
+            <%= link_to public_card_path(customer.public_token), class: "search-page-result" do %>
+              <span>
+                <span class="search-page-result-name"><%= customer.name %></span>
+                <span class="search-page-result-meta">Loyalty card</span>
+              </span>
+              <span aria-hidden="true">→</span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <div class="search-page-empty">
+        <h2 class="search-page-empty-title">No results</h2>
+        <p>No customer found named “<%= @query %>”. Please check with staff.</p>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="search-page-empty">
+      <svg class="search-page-empty-art" viewBox="0 0 72 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="8" y="10" width="28" height="5" rx="1.5" fill="#1a3a8f"/>
+        <rect x="8" y="20" width="36" height="5" rx="1.5" fill="#c0143c"/>
+        <rect x="8" y="30" width="22" height="5" rx="1.5" fill="#1a3a8f"/>
+        <circle cx="48" cy="38" r="13" stroke="#1a3a8f" stroke-width="4"/>
+        <path d="M58 48l9 9" stroke="#1a3a8f" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <h2 class="search-page-empty-title">Begin search</h2>
+      <ul class="search-page-tips">
+        <li>Search using the name on your loyalty card.</li>
+        <li>Use your first name, last name, or both.</li>
+        <li>Ask any staff member if you cannot find your card.</li>
+      </ul>
+    </div>
+  <% end %>
+</section>
